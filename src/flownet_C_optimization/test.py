@@ -27,7 +27,7 @@ checkpoints_path = config.CHECKPOINTS_PATH
 #     if image.max() > 1.0:
 #         image = image / 255.0
 #     return image
-def read_img(imgname):
+def read_img( imgname):
     image = cv2.imread(imgname)
     image = image.astype(np.float32)
     return image

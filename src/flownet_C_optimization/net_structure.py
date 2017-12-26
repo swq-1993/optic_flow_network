@@ -69,7 +69,7 @@ def placeholder_inputs():
 
 
 def fill_feed_dict(data, img1_pl, img2_pl, flo_pl):
-    img1_feed, img2_feed, flo_feed = data.get_batch(batch_size)
+    img1_feed, img2_feed, flo_feed = data.build_batch(batch_size)
     # test
     # cv2.imshow('img1', img1_feed[3].astype(np.uint8))
     # cv2.imshow('img2', img2_feed[1].astype(np.uint8))
@@ -230,7 +230,7 @@ def loss(flow, predictions):
 
 if __name__ == '__main__':
     trainset = get_train_file()
-    batch_img1, batch_img2, batch_flo = trainset.build_batch(4)
+    batch_img1, batch_img2, batch_flo = trainset.get_batch(4)
     net_structure(batch_img1, batch_img2)
 
 # if __name__ == '__main__':
