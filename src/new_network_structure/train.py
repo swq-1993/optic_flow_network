@@ -2,15 +2,15 @@
 # -*- coding: UTF-8 -*-
 
 import tensorflow as tf
-import util
 import net_structure
+import util
 from timer import Timer
 import config
 import datetime
 import os
 import matplotlib.pyplot as plt
 import dataset_configs
-import data_load
+import data_load_boundary
 import cv2
 import numpy as np
 
@@ -27,12 +27,12 @@ average_loss_record = []
 
 
 def train():
-    trainset = util.get_train_file()
+    # trainset = util.get_train_file()
 
     learn_rate_placeholder = tf.placeholder(tf.float32, shape=())
-    input_a, input_b, flow = data_load.load_batch(dataset_configs.FLYING_CHAIRS_DATASET_CONFIG, 'train')
+    image_a, image_b, boundary_a, boundary_b, flow = data_load_boundary.load_batch(dataset_configs.FLYING_CHAIRS_DATASET_CONFIG, 'train')
 
-    predict = net_structure.net_structure(input_a, input_b)
+    predict = net_structure.net_structure(image_a, image_b, boundary_a, boundary_b)
     loss = net_structure.loss(flow, predict)
 
     global_step = tf.Variable(0, name='global_step', trainable=False)
@@ -68,7 +68,7 @@ def train():
 
             _, loss_value = sess.run([train_op, loss], feed_dict=feed_dict)
             # for i in range(6):
-            #     img = img1[0, :, :, :]
+            #     img = boundary_a[i, :, :, :] * 255.0
             #     cv2.imshow('img' + str(i), img.astype(np.uint8))
             #     cv2.waitKey(0)
 
@@ -76,18 +76,18 @@ def train():
             print train_time.average_time
             loss_sum += loss_value
 
-            if step % 100 == 0:
-                log_info = ('{} Epoch: {}, step: {}, learning rate: {},'
-                           'Loss: {:5.3f}\nSpeed: {:.3f}s/iter, Remain: {}').format(
-                    datetime.datetime.now().strftime('%m/%d %H:%M:%S'),
-                    trainset.epochs_completed,
-                    int(step),
-                    feed_dict[learn_rate_placeholder],
-                    loss_value,
-                    train_time.average_time,
-                    train_time.remain(step, max_step)
-                )
-                print log_info
+            # if step % 100 == 0:
+            log_info = ('{} Epoch: {}, learning rate: {},'
+                       'Loss: {:5.3f}\nSpeed: {:.3f}s/iter, Remain: {}').format(
+                datetime.datetime.now().strftime('%m/%d %H:%M:%S'),
+                # trainset.epochs_completed,
+                int(step),
+                feed_dict[learn_rate_placeholder],
+                loss_value,
+                train_time.average_time,
+                train_time.remain(step, max_step)
+            )
+            print log_info
 
             if (step + 1) % 100 == 0 or (step + 1) == max_step:
                 f = open(logfile, 'a')

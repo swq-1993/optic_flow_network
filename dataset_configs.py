@@ -47,8 +47,8 @@ FLYING_CHAIRS_DATASET_CONFIG = {
     },
     'BATCH_SIZE': 2,
     'PATHS': {
-        'train': '/home/swq/Downloads/flownet2-tf/data/tfrecords/fc_train.tfrecords',
-        'validate': '/home/swq/Downloads/flownet2-tf/data/tfrecords/fc_val.tfrecords',
+        'train': '/home/swq/Documents/optic_flow_network/tfrecord/fc_train.tfrecords',
+        'validate': '/home/swq/Documents/optic_flow_network/tfrecord/fc_val.tfrecords',
         'sample': '/home/swq/Downloads/flownet2-tf/data/tfrecords/fc_sample.tfrecords',
     },
     'PREPROCESS': {

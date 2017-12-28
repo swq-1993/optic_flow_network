@@ -39,6 +39,21 @@ def get_train_file():
     trainset = Data([image_a_train_path, image_b_train_path, flow_train_path])
     return trainset
 
+# def get_train_boundary_file():
+#     train_idxs, val_idxs = load_train_val_split()
+#     image_a_train_path = []
+#     image_b_train_path = []
+#     boundary_a_train_path = []
+#     boundary_b_train_path = []
+#     flow_train_path = []
+#     for i in train_idxs:
+#         image_a_train_path.append(os.path.join(file_path, '%05d_img1.ppm' % (i + 1)))
+#         image_b_train_path.append(os.path.join(file_path, '%05d_img2.ppm' % (i + 1)))
+#
+#         flow_train_path.append(os.path.join(file_path, '%05d_flow.flo' % (i + 1)))
+#     trainset = Data([image_a_train_path, image_b_train_path, flow_train_path])
+#     return trainset
+
 
 class Data(object):
     def __init__(self, nameset):

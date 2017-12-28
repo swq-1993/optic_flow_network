@@ -27,7 +27,7 @@ average_loss_record = []
 
 
 def train():
-    trainset = util.get_train_file()
+    # trainset = util.get_train_file()
 
     learn_rate_placeholder = tf.placeholder(tf.float32, shape=())
     input_a, input_b, flow = data_load.load_batch(dataset_configs.FLYING_CHAIRS_DATASET_CONFIG, 'train')
