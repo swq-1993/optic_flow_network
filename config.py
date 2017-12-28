@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-import numpy as np
 
 FILE_PATH = '/home/swq/Downloads/flownet2-tf/data/FlyingChairs_release/data'
 LIST_PATH = '/home/swq/Downloads/flownet2-tf/data'
 LOG_PATH = '/home/swq/Documents/optic_flow_network/logs7'
 CHECKPOINTS_PATH = '/home/swq/Documents/optic_flow_network/checkpoints7'
+
+OUT_PATH = '/home/swq/Documents/run_optic_flow/out'
+TEST_PATH = '/home/swq/Documents/run_optic_flow/test_image'
 
 '''batch_size = 16就大了(GTX960)'''
 BATCH_SIZE = 8

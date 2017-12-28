@@ -126,40 +126,40 @@ def __get_dataset(dataset_config, split_name):
             items_to_descriptions=dataset_config['ITEMS_TO_DESCRIPTIONS'])
 
 
-def config_to_arrays(dataset_config):
-    output = {
-        'name': [],
-        'rand_type': [],
-        'exp': [],
-        'mean': [],
-        'spread': [],
-        'prob': [],
-        'coeff_schedule': [],
-    }
-    config = copy.deepcopy(dataset_config)
-
-    if 'coeff_schedule_param' in config:
-        del config['coeff_schedule_param']
-
-    # Get all attributes
-    for (name, value) in config.iteritems():
-        if name == 'coeff_schedule_param':
-            output['coeff_schedule'] = [value['half_life'],
-                                        value['initial_coeff'],
-                                        value['final_coeff']]
-        else:
-            output['name'].append(name)
-            output['rand_type'].append(value['rand_type'])
-            output['exp'].append(value['exp'])
-            output['mean'].append(value['mean'])
-            output['spread'].append(value['spread'])
-            output['prob'].append(value['prob'])
-
-    return output
-
+# def config_to_arrays(dataset_config):
+#     output = {
+#         'name': [],
+#         'rand_type': [],
+#         'exp': [],
+#         'mean': [],
+#         'spread': [],
+#         'prob': [],
+#         'coeff_schedule': [],
+#     }
+#     config = copy.deepcopy(dataset_config)
+#
+#     if 'coeff_schedule_param' in config:
+#         del config['coeff_schedule_param']
+#
+#     # Get all attributes
+#     for (name, value) in config.iteritems():
+#         if name == 'coeff_schedule_param':
+#             output['coeff_schedule'] = [value['half_life'],
+#                                         value['initial_coeff'],
+#                                         value['final_coeff']]
+#         else:
+#             output['name'].append(name)
+#             output['rand_type'].append(value['rand_type'])
+#             output['exp'].append(value['exp'])
+#             output['mean'].append(value['mean'])
+#             output['spread'].append(value['spread'])
+#             output['prob'].append(value['prob'])
+#
+#     return output
+#
 
 def load_batch(dataset_config, split_name):
-    num_threads = 2
+    num_threads = 8
     reader_kwargs = {'options': tf.python_io.TFRecordOptions(
         tf.python_io.TFRecordCompressionType.ZLIB)}
 
@@ -174,18 +174,15 @@ def load_batch(dataset_config, split_name):
         image_a, image_b, flow = data_provider.get(['image_a', 'image_b', 'flow'])
         image_a, image_b, flow = map(tf.to_float, [image_a, image_b, flow])
 
-        if dataset_config['PREPROCESS']['scale']:
-            image_a = image_a / 255.0
-            image_b = image_b / 255.0
-
         image_as, image_bs, flows = map(lambda x: tf.expand_dims(x, 0), [image_a, image_b, flow])
 
-        return tf.train.batch([image_as, image_bs, flows],
-                              enqueue_many=True,
-                              batch_size=config.BATCH_SIZE,
-                              capacity=config.BATCH_SIZE * 8,
-                              num_threads=num_threads,
-                              allow_smaller_final_batch=False)
+        return tf.train.shuffle_batch([image_a, image_b, flow],
+                                      # enqueue_many=True,
+                                      batch_size=config.BATCH_SIZE,
+                                      capacity=config.BATCH_SIZE * 16,
+                                      min_after_dequeue=config.BATCH_SIZE * 4,
+                                      num_threads=num_threads,
+                                      allow_smaller_final_batch=False)
 
 
 if __name__ == '__main__':

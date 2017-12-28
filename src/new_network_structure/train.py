@@ -28,17 +28,12 @@ average_loss_record = []
 
 def train():
     trainset = util.get_train_file()
-    # valset = data.get_val_file()
 
-    # img1_placeholder, img2_placeholder, flo_placeholder = net_structure.placeholder_inputs()
     learn_rate_placeholder = tf.placeholder(tf.float32, shape=())
     input_a, input_b, flow = data_load.load_batch(dataset_configs.FLYING_CHAIRS_DATASET_CONFIG, 'train')
 
     predict = net_structure.net_structure(input_a, input_b)
     loss = net_structure.loss(flow, predict)
-    # global_step = tf.Variable(0, name='global_step', trainable=False)
-    # learning_rate = tf.train.exponential_decay(initial_learning_rate, global_step, decay_steps=2000, decay_rate=0.1)
-    # learning_rate = initial_learning_rate
 
     global_step = tf.Variable(0, name='global_step', trainable=False)
     optimizer = tf.train.AdamOptimizer(learn_rate_placeholder, momentum, momentum2)
@@ -47,7 +42,6 @@ def train():
     summary = tf.summary.merge_all()
     init = tf.global_variables_initializer()
     saver = tf.train.Saver()
-    # sess = tf.Session()
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
 
@@ -66,7 +60,6 @@ def train():
 
         for step in xrange(max_step):
             train_time.tic()
-            # feed_dict = net_structure.fill_feed_dict(trainset, img1_placeholder, img2_placeholder, flo_placeholder)
             feed_dict[learn_rate_placeholder] = initial_learning_rate
 
             if step > 10000:
@@ -83,14 +76,12 @@ def train():
             print train_time.average_time
             loss_sum += loss_value
 
-            # if step % 20 == 0:
             if step % 100 == 0:
                 log_info = ('{} Epoch: {}, step: {}, learning rate: {},'
                            'Loss: {:5.3f}\nSpeed: {:.3f}s/iter, Remain: {}').format(
                     datetime.datetime.now().strftime('%m/%d %H:%M:%S'),
                     trainset.epochs_completed,
                     int(step),
-                    # learning_rate.eval(session=sess),
                     feed_dict[learn_rate_placeholder],
                     loss_value,
                     train_time.average_time,
@@ -109,9 +100,6 @@ def train():
             if (step + 1) % 500 == 0 or (step + 1) == max_step:
                 checkpoint_file = os.path.join(checkpoints, 'model.ckpt')
                 saver.save(sess, checkpoint_file, global_step=step)
-            '''暂时不跑验证集了'''
-            #     print 'Validation Data Eval:'
-            #     run_val(sess, img1_placeholder, img2_placeholder, flo_placeholder, loss, valset)
 
         coord.request_stop()
         coord.join(threads)

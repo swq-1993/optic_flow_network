@@ -6,12 +6,14 @@ import cv2
 import config
 import os
 import struct
+import tensorflow as tf
 
 file_path = config.FILE_PATH
 list_path = config.LIST_PATH
 
 TRAIN = 1
 VAL = 2
+
 
 def load_train_val_split():
     train_val_split = os.path.join(list_path, 'FlyingChairs_train_val.txt')
@@ -25,12 +27,16 @@ def get_train_file():
     train_idxs, val_idxs = load_train_val_split()
     image_a_train_path = []
     image_b_train_path = []
+    boundary_a_train_path = []
+    boundary_b_train_path = []
     flow_train_path = []
     for i in train_idxs:
         image_a_train_path.append(os.path.join(file_path, '%05d_img1.ppm' % (i + 1)))
         image_b_train_path.append(os.path.join(file_path, '%05d_img2.ppm' % (i + 1)))
+        boundary_a_train_path.append(os.path.join(file_path, '%05d_flow.png') % (i + 1))
+        boundary_b_train_path.append(os.path.join(file_path, '%05d_flow2.png') % (i + 1))
         flow_train_path.append(os.path.join(file_path, '%05d_flow.flo' % (i + 1)))
-    trainset = Data([image_a_train_path, image_b_train_path, flow_train_path])
+    trainset = Data([image_a_train_path, image_b_train_path, boundary_a_train_path, boundary_b_train_path, flow_train_path])
     return trainset
 
 
@@ -54,7 +60,9 @@ class Data(object):
         self.num_examples = len(nameset[0])
         self.img1 = np.array(nameset[0])
         self.img2 = np.array(nameset[1])
-        self.flo = np.array(nameset[2])
+        self.boundary1 = np.array(nameset[2])
+        self.boundary2 = np.array(nameset[3])
+        self.flo = np.array(nameset[4])
 
     def read_flo(self, floname):
         f = open(floname, "rb")
@@ -102,15 +110,19 @@ class Data(object):
             print perm
             self.img1 = self.img1[perm]
             self.img2 = self.img2[perm]
+            self.boundary1 = self.boundary1[perm]
+            self.boundary2 = self.boundary2[perm]
             self.flo = self.flo[perm]
             assert batch_size <= self.num_examples
         end = self.index_in_epoch
         # get batch
         batch_img1 = self.create_batch(True, self.img1[start:end])
         batch_img2 = self.create_batch(True, self.img2[start:end])
+        batch_boundary1 = self.create_batch(True, self.boundary1[start:end])
+        batch_boundary2 = self.create_batch(True, self.boundary2[start:end])
         batch_flo = self.create_batch(False, self.flo[start:end])
 
-        return batch_img1, batch_img2, batch_flo
+        return batch_img1, batch_img2, batch_boundary1, batch_boundary2, batch_flo
 
     def build_batch(self, batch_size):
         img1 = self.create_batch(True, self.img1)
@@ -127,8 +139,8 @@ class Data(object):
 
 if __name__ == '__main__':
     trainset = get_train_file()
-    batch_img1, batch_img2, batch_flo = trainset.get_batch(6)
-    batch_img1, batch_img2, batch_flo = trainset.get_batch(6)
+    batch_img1, batch_img2, batch_boundary1, batch_boundary2, batch_flo = trainset.get_batch(6)
+    batch_img1, batch_img2, batch_boundary1, batch_boundary2, batch_flo = trainset.get_batch(6)
     for i in range(6):
         img = batch_img1[i]
         cv2.imshow('img'+str(i), img.astype(np.uint8))
