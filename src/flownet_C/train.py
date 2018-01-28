@@ -24,23 +24,30 @@ val_loss_record = []
 average_loss_record = []
 
 
+def run_val(sess, img1_palceholder, img2_placeholder, flo_placeholder, loss, validation):
+    loss_count = 0
+    step_per_epoch = validation.num_examples // batch_size
+    num_examples = step_per_epoch * batch_size
+    for step in xrange(step_per_epoch):
+        feed_dict = net_structure.fill_feed_dict(validation, img1_palceholder, img2_placeholder, flo_placeholder)
+        loss_count += sess.run(loss, feed_dict=feed_dict)
+    average = float(loss_count) / num_examples
+    val_loss_record.append(average)
+    print 'Num examples: %d Average loss %0.04f' % (num_examples, average)
+
+
 def train():
     trainset = data.get_train_file()
-    # valset = data.get_val_file()
 
     img1_placeholder, img2_placeholder, flo_placeholder = net_structure.placeholder_inputs()
     learn_rate_placeholder = tf.placeholder(tf.float32, shape=())
     predict = net_structure.net_structure(img1_placeholder, img2_placeholder)
     loss = net_structure.loss(flo_placeholder, predict)
-    # global_step = tf.Variable(0, name='global_step', trainable=False)
-    # learning_rate = tf.train.exponential_decay(initial_learning_rate, global_step, decay_steps=2000, decay_rate=0.1)
-    # learning_rate = initial_learning_rate
 
     global_step = tf.Variable(0, name='global_step', trainable=False)
     optimizer = tf.train.AdamOptimizer(learn_rate_placeholder, momentum, momentum2)
     train_op = optimizer.minimize(loss, global_step=global_step)
 
-    summary = tf.summary.merge_all()
     init = tf.global_variables_initializer()
     saver = tf.train.Saver()
     sess = tf.Session()
@@ -74,7 +81,6 @@ def train():
         print train_time.average_time
         loss_sum += loss_value
 
-        # if step % 20 == 0:
         if step % 100 == 0:
             log_info = ('{} Epoch: {}, step: {}, learning rate: {},'
                        'Loss: {:5.3f}\nSpeed: {:.3f}s/iter, Remain: {}').format(

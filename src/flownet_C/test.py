@@ -20,13 +20,6 @@ test_path = config.TEST_PATH
 checkpoints_path = config.CHECKPOINTS_PATH
 
 
-# def read_img(imgname):
-#     image = cv2.imread(imgname)
-#     image = image.astype(np.float32)
-#     # image = image[..., [2, 1, 0]]
-#     if image.max() > 1.0:
-#         image = image / 255.0
-#     return image
 def read_img(imgname):
     image = cv2.imread(imgname)
     image = image.astype(np.float32)

@@ -159,7 +159,7 @@ def __get_dataset(dataset_config, split_name):
 #
 
 def load_batch(dataset_config, split_name):
-    num_threads = 8
+    num_threads = 1
     reader_kwargs = {'options': tf.python_io.TFRecordOptions(
         tf.python_io.TFRecordCompressionType.ZLIB)}
 
@@ -176,11 +176,11 @@ def load_batch(dataset_config, split_name):
 
         image_as, image_bs, flows = map(lambda x: tf.expand_dims(x, 0), [image_a, image_b, flow])
 
-        return tf.train.shuffle_batch([image_a, image_b, flow],
+        return tf.train.batch([image_a, image_b, flow],
                                       # enqueue_many=True,
                                       batch_size=config.BATCH_SIZE,
-                                      capacity=config.BATCH_SIZE * 16,
-                                      min_after_dequeue=config.BATCH_SIZE * 4,
+                                      capacity=config.BATCH_SIZE,
+                                      # min_after_dequeue=config.BATCH_SIZE * 4,
                                       num_threads=num_threads,
                                       allow_smaller_final_batch=False)
 

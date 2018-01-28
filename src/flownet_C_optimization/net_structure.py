@@ -232,9 +232,3 @@ if __name__ == '__main__':
     trainset = get_train_file()
     batch_img1, batch_img2, batch_flo = trainset.get_batch(4)
     net_structure(batch_img1, batch_img2)
-
-# if __name__ == '__main__':
-#     img1_placeholder, img2_placeholder, flo_placeholder = placeholder_inputs()
-#     trainset = get_train_file()
-#     feed_dict = feed_dict(trainset, img1_placeholder, img2_placeholder, flo_placeholder)
-

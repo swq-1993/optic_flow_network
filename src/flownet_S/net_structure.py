@@ -13,7 +13,7 @@ img_height = config.IMAGE_HEIGHT
 img_width = config.IMAGE_WIDTH
 img_channels = config.IMAGE_CHANNELS
 flo_channels = config.FLO_CHANNELS
-loss_weight_schedule = config.loss_weights_schedule
+# loss_weight_schedule = config.loss_weights_schedule
 
 
 def placeholder_inputs():
@@ -90,7 +90,7 @@ def comput_loss(deconvflow5, deconvflow4, deconvflow3, prediction, flo):
     loss4 = 0.2 * tensor_loss(flo4 - deconvflow4, 'loss4')
     flo3 = tf.image.resize_images(flo, [96, 128])
     loss3 = 0.2 * tensor_loss(flo3 - deconvflow3, 'loss3')
-    flo4 = tf.image.resize_images(flo, [192, 256])
+    flo4 = tf.image.resize_images(flo, [96, 128])
     loss2 = 1 * tensor_loss(flo4 - prediction, 'loss2')
 
     total_loss = tf.add_n([loss5, loss4, loss3, loss2], name='total_loss')
@@ -102,8 +102,3 @@ if __name__ == '__main__':
     trainset = data.get_train_file()
     batch_img1, batch_img2, batch_flo = trainset.get_batch(4)
     net_structure(batch_img1, batch_img2)
-
-# if __name__ == '__main__':
-#     img1_placeholder, img2_placeholder, flo_placeholder = placeholder_inputs()
-#     trainset = get_train_file()
-#     feed_dict = feed_dict(trainset, img1_placeholder, img2_placeholder, flo_placeholder)

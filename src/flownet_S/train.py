@@ -45,13 +45,11 @@ def train():
     loss = net_structure.comput_loss(deconvflow5, deconvflow4, deconvflow3, prediction, flo_placeholder)
     global_step = tf.Variable(0, name='global_step', trainable=False)
     # learning_rate = tf.train.exponential_decay(initial_learning_rate, global_step, decay_steps=2000, decay_rate=0.1)
-    # learning_rate = initial_learning_rate
 
     global_step = tf.Variable(0, name='global_step', trainable=False)
     optimizer = tf.train.AdamOptimizer(learn_rate_placeholder, momentum, momentum2)
     train_op = optimizer.minimize(loss, global_step=global_step)
 
-    summary = tf.summary.merge_all()
     init = tf.global_variables_initializer()
     saver = tf.train.Saver()
     sess = tf.Session()
@@ -92,10 +90,6 @@ def train():
                 train_time.remain(step, max_step)
             )
             print log_info
-        # summary_str = sess.run(summary, feed_dict=feed_dict)
-        # summary_writer = tf.summary.FileWriter(log_dir, sess.graph)
-        # summary_writer.add_summary(summary_str, step)
-        # summary_writer.flush()
 
         if (step + 1) % 100 == 0 or (step + 1) == max_step:
             f = open(logfile, 'a')

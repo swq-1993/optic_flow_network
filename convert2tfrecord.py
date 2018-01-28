@@ -44,8 +44,10 @@ def convert_dataset(indices, name):
     for i in indices:
         image_a_path = os.path.join(FLAGS.data_dir, '%05d_img1.ppm' % (i + 1))
         image_b_path = os.path.join(FLAGS.data_dir, '%05d_img2.ppm' % (i + 1))
-        boundary_a_path = os.path.join(FLAGS.data_dir, '%05d_flow.png' % (i + 1))
-        boundary_b_path = os.path.join(FLAGS.data_dir, '%05d_flow2.png' % (i + 1))
+        boundary_a_path = os.path.join('/home/swq/Documents/my_deeplab_resnet/canny_contours', '%05d_flow.png' % (i + 1))
+        # boundary_a_path = os.path.join(FLAGS.data_dir, '%05d_flow.png' % (i + 1))
+        boundary_b_path = os.path.join('/home/swq/Documents/my_deeplab_resnet/canny_contours', '%05d_flow2.png' % (i + 1))
+        # boundary_b_path = os.path.join(FLAGS.data_dir, '%05d_flow2.png' % (i + 1))
         flow_path = os.path.join(FLAGS.data_dir, '%05d_flow.flo' % (i + 1))
 
         image_a = imread(image_a_path)

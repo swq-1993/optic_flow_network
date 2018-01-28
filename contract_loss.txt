@@ -1,0 +1,69 @@
+00010  old_loss:  90665.6  new_loss:  88336.6  diff:  2329.01
+00011  old_loss:  56917.6  new_loss:  50631.2  diff:  6286.39
+00012  old_loss:  33705.0  new_loss:  26777.1  diff:  6927.88
+00013  old_loss:  39073.3  new_loss:  37023.4  diff:  2049.91
+00014  old_loss:  49075.4  new_loss:  45320.6  diff:  3754.77
+00015  old_loss:  79415.6  new_loss:  79473.5  diff:  -57.8906
+00016  old_loss:  63522.8  new_loss:  56974.0  diff:  6548.74
+00017  old_loss:  62169.1  new_loss:  63198.8  diff:  -1029.61
+00018  old_loss:  46463.9  new_loss:  44733.4  diff:  1730.55
+00019  old_loss:  77779.7  new_loss:  78464.0  diff:  -684.219
+00020  old_loss:  93287.3  new_loss:  82152.1  diff:  11135.2
+00021  old_loss:  51227.6  new_loss:  64646.3  diff:  -13418.7
+00022  old_loss:  41841.9  new_loss:  36150.4  diff:  5691.48
+00023  old_loss:  84612.1  new_loss:  83957.3  diff:  654.75
+00024  old_loss:  106007.0  new_loss:  105959.0  diff:  48.9219
+00025  old_loss:  22581.9  new_loss:  18644.0  diff:  3937.82
+00026  old_loss:  78581.0  new_loss:  103959.0  diff:  -25377.5
+00027  old_loss:  79585.3  new_loss:  82427.1  diff:  -2841.85
+00028  old_loss:  88063.1  new_loss:  75960.9  diff:  12102.2
+00029  old_loss:  140867.0  new_loss:  117589.0  diff:  23277.6
+00030  old_loss:  125951.0  new_loss:  135419.0  diff:  -9467.8
+00031  old_loss:  56830.6  new_loss:  66293.8  diff:  -9463.21
+00032  old_loss:  54542.7  new_loss:  57451.1  diff:  -2908.46
+00033  old_loss:  59152.7  new_loss:  55989.1  diff:  3163.63
+00034  old_loss:  70909.8  new_loss:  73391.2  diff:  -2481.38
+00035  old_loss:  66312.8  new_loss:  65941.2  diff:  371.531
+00011  old_loss:  56917.6  new_loss:  50631.2  canny_loss:  55357.8  motion_diff:  6286.39  canny_diff:  1559.81
+00012  old_loss:  33705.0  new_loss:  26777.1  canny_loss:  25289.1  motion_diff:  6927.88  canny_diff:  8415.91
+00013  old_loss:  39073.3  new_loss:  37023.4  canny_loss:  41463.4  motion_diff:  2049.91  canny_diff:  -2390.12
+00014  old_loss:  49075.4  new_loss:  45320.6  canny_loss:  39843.6  motion_diff:  3754.77  canny_diff:  9231.8
+00015  old_loss:  79415.6  new_loss:  79473.5  canny_loss:  95770.6  motion_diff:  -57.8906  canny_diff:  -16355.1
+00016  old_loss:  63522.8  new_loss:  56974.0  canny_loss:  60754.9  motion_diff:  6548.74  canny_diff:  2767.91
+00017  old_loss:  62169.1  new_loss:  63198.8  canny_loss:  66183.2  motion_diff:  -1029.61  canny_diff:  -4014.08
+00018  old_loss:  46463.9  new_loss:  44733.4  canny_loss:  36040.7  motion_diff:  1730.55  canny_diff:  10423.2
+00019  old_loss:  77779.7  new_loss:  78464.0  canny_loss:  84092.9  motion_diff:  -684.219  canny_diff:  -6313.2
+00020  old_loss:  93287.3  new_loss:  82152.1  canny_loss:  94400.5  motion_diff:  11135.2  canny_diff:  -1113.16
+00021  old_loss:  51227.6  new_loss:  64646.3  canny_loss:  55792.8  motion_diff:  -13418.7  canny_diff:  -4565.17
+00022  old_loss:  41841.9  new_loss:  36150.4  canny_loss:  37907.5  motion_diff:  5691.48  canny_diff:  3934.39
+00023  old_loss:  84612.1  new_loss:  83957.3  canny_loss:  86533.8  motion_diff:  654.75  canny_diff:  -1921.72
+00024  old_loss:  106007.0  new_loss:  105959.0  canny_loss:  106945.0  motion_diff:  48.9219  canny_diff:  -937.188
+00025  old_loss:  22581.9  new_loss:  18644.0  canny_loss:  22697.3  motion_diff:  3937.82  canny_diff:  -115.438
+00026  old_loss:  78581.0  new_loss:  103959.0  canny_loss:  84881.8  motion_diff:  -25377.5  canny_diff:  -6300.75
+00027  old_loss:  79585.3  new_loss:  82427.1  canny_loss:  82798.2  motion_diff:  -2841.85  canny_diff:  -3212.87
+00028  old_loss:  88063.1  new_loss:  75960.9  canny_loss:  86852.8  motion_diff:  12102.2  canny_diff:  1210.24
+00029  old_loss:  140867.0  new_loss:  117589.0  canny_loss:  162849.0  motion_diff:  23277.6  canny_diff:  -21982.4
+00030  old_loss:  125951.0  new_loss:  135419.0  canny_loss:  141501.0  motion_diff:  -9467.8  canny_diff:  -15550.4
+00031  old_loss:  56830.6  new_loss:  66293.8  canny_loss:  89220.6  motion_diff:  -9463.21  canny_diff:  -32390.0
+00032  old_loss:  54542.7  new_loss:  57451.1  canny_loss:  57159.1  motion_diff:  -2908.46  canny_diff:  -2616.4
+00033  old_loss:  59152.7  new_loss:  55989.1  canny_loss:  58039.1  motion_diff:  3163.63  canny_diff:  1113.55
+00034  old_loss:  70909.8  new_loss:  73391.2  canny_loss:  76695.2  motion_diff:  -2481.38  canny_diff:  -5785.36
+00035  old_loss:  66312.8  new_loss:  65941.2  canny_loss:  72071.3  motion_diff:  371.531  canny_diff:  -5758.52
+00035  old_loss:  172.69  new_loss:  171.722  canny_loss:  187.686  motion_diff:  0.967529  canny_diff:  -14.9962
+00033  old_loss:  154.043  new_loss:  145.805  canny_loss:  151.144  motion_diff:  8.23862  canny_diff:  2.89987
+00032  old_loss:  142.038  new_loss:  149.612  canny_loss:  148.852  motion_diff:  -7.57413  canny_diff:  -6.81354
+00032  old_loss:  165.514  new_loss:  185.434  canny_loss:  175.555  motion_diff:  -19.9204  canny_diff:  -10.0413
+00032  old_loss:  165.514  new_loss:  185.434  canny_loss:  175.555  motion_diff:  -19.9204  canny_diff:  -10.0413
+00032  old_loss:  1821.69  new_loss:  1872.97  canny_loss:  1986.27  motion_diff:  -51.2759  canny_diff:  -164.573
+00032  old_loss:  1821.69  new_loss:  1872.97  canny_loss:  1986.27  motion_diff:  -51.2759  canny_diff:  -164.573
+00032  old_loss:  1440.45  new_loss:  1457.98  canny_loss:  1548.44  motion_diff:  -17.5208  canny_diff:  -107.987
+00032  old_loss:  142.038  new_loss:  149.612  canny_loss:  148.852  motion_diff:  -7.57413  canny_diff:  -6.81354
+00032  old_loss:  142.038  new_loss:  149.612  canny_loss:  148.852  motion_diff:  -7.57413  canny_diff:  -6.81354
+00032  old_loss:  142.038  new_loss:  149.612  canny_loss:  148.852  motion_diff:  -7.57413  canny_diff:  -6.81354
+00032  old_loss:  142.038  new_loss:  149.612  canny_loss:  148.852  motion_diff:  -7.57413  canny_diff:  -6.81354
+00032  old_loss:  0.277418  new_loss:  0.292212  canny_loss:  0.290726  motion_diff:  -0.0147932  canny_diff:  -0.0133077
+00032  old_loss:  2.81339  new_loss:  2.84761  canny_loss:  3.0243  motion_diff:  -0.0342202  canny_diff:  -0.210912
+00035  old_loss:  2.90753  new_loss:  3.38502  canny_loss:  3.70091  motion_diff:  -0.477493  canny_diff:  -0.793376
+00033  old_loss:  3.38314  new_loss:  3.28563  canny_loss:  3.28667  motion_diff:  0.0975082  canny_diff:  0.0964675
+00033  old_loss:  3.38314  new_loss:  3.28563  canny_loss:  3.28667  motion_diff:  0.0975082  canny_diff:  0.0964675
+00033  old_loss:  3.38314  new_loss:  3.28563  canny_loss:  3.28667  motion_diff:  0.0975082  canny_diff:  0.0964675

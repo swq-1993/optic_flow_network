@@ -171,6 +171,30 @@ def net_structure(img1, img2, boundary1, boundary2):
                                             activation_fn=None)
             """ END: Refinement Network """
 
+            '''new loss'''
+            # target_height, target_width = int(predict_flow2.shape[1].value), int(predict_flow2.shape[2].value)
+            # predict_flow6 = tf.image.resize_bilinear(predict_flow6,
+            #                                          tf.stack([target_height, target_width]),
+            #                                          align_corners=True)
+            # predict_flow5 = tf.image.resize_bilinear(predict_flow5,
+            #                                          tf.stack([target_height, target_width]),
+            #                                          align_corners=True)
+            # predict_flow4 = tf.image.resize_bilinear(predict_flow4,
+            #                                          tf.stack([target_height, target_width]),
+            #                                          align_corners=True)
+            # predict_flow3 = tf.image.resize_bilinear(predict_flow3,
+            #                                          tf.stack([target_height, target_width]),
+            #                                          align_corners=True)
+            # predict = tf.concat([predict_flow5, predict_flow4, predict_flow3, predict_flow2], axis=3)
+            # # flow = predict * 20.0
+            # flow_temp0 = slim.conv2d(pad(predict), num_outputs=2, kernel_size=2, stride=1, scope='flow_temp0')
+            # flow_temp = tf.image.resize_bilinear(flow_temp0,
+            #                                      tf.stack([img_height, img_width]),
+            #                                      align_corners=True)
+            # flow = flow_temp * 20.0
+
+            # origin loss compute
+
             flow = predict_flow2 * 20.0
             # TODO: Look at Accum (train) or Resample (deploy) to see if we need to do something different
             flow = tf.image.resize_bilinear(flow,
@@ -185,6 +209,11 @@ def net_structure(img1, img2, boundary1, boundary2):
                 'predict_flow2': predict_flow2,
                 'flow': flow,
             }
+
+            # return {
+            #     'predict': flow_temp0,
+            #     'flow': flow
+            # }
 
 
 def loss(flow, predictions):
@@ -233,9 +262,3 @@ if __name__ == '__main__':
     trainset = get_train_file()
     batch_img1, batch_img2, batch_boundary1, batch_boundary2, batch_flo = trainset.get_batch(4)
     net_structure(batch_img1, batch_img2, batch_boundary1, batch_boundary2)
-
-# if __name__ == '__main__':
-#     img1_placeholder, img2_placeholder, flo_placeholder = placeholder_inputs()
-#     trainset = get_train_file()
-#     feed_dict = feed_dict(trainset, img1_placeholder, img2_placeholder, flo_placeholder)
-

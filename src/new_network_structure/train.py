@@ -3,7 +3,6 @@
 
 import tensorflow as tf
 import net_structure
-import util
 from timer import Timer
 import config
 import datetime
@@ -27,8 +26,6 @@ average_loss_record = []
 
 
 def train():
-    # trainset = util.get_train_file()
-
     learn_rate_placeholder = tf.placeholder(tf.float32, shape=())
     image_a, image_b, boundary_a, boundary_b, flow = data_load_boundary.load_batch(dataset_configs.FLYING_CHAIRS_DATASET_CONFIG, 'train')
 
@@ -39,11 +36,9 @@ def train():
     optimizer = tf.train.AdamOptimizer(learn_rate_placeholder, momentum, momentum2)
     train_op = optimizer.minimize(loss, global_step=global_step)
 
-    summary = tf.summary.merge_all()
     init = tf.global_variables_initializer()
     saver = tf.train.Saver()
     config = tf.ConfigProto()
-    config.gpu_options.allow_growth = True
 
     with tf.Session(config=config) as sess:
         train_time = Timer()
@@ -73,21 +68,20 @@ def train():
             #     cv2.waitKey(0)
 
             train_time.toc()
-            print train_time.average_time
             loss_sum += loss_value
 
-            # if step % 100 == 0:
-            log_info = ('{} Epoch: {}, learning rate: {},'
-                       'Loss: {:5.3f}\nSpeed: {:.3f}s/iter, Remain: {}').format(
-                datetime.datetime.now().strftime('%m/%d %H:%M:%S'),
-                # trainset.epochs_completed,
-                int(step),
-                feed_dict[learn_rate_placeholder],
-                loss_value,
-                train_time.average_time,
-                train_time.remain(step, max_step)
-            )
-            print log_info
+            if step % 100 == 0:
+                log_info = ('{} Epoch: {}, learning rate: {},'
+                           'Loss: {:5.3f}\nSpeed: {:.3f}s/iter, Remain: {}').format(
+                    datetime.datetime.now().strftime('%m/%d %H:%M:%S'),
+                    # trainset.epochs_completed,
+                    int(step),
+                    feed_dict[learn_rate_placeholder],
+                    loss_value,
+                    train_time.average_time,
+                    train_time.remain(step, max_step)
+                )
+                print log_info
 
             if (step + 1) % 100 == 0 or (step + 1) == max_step:
                 f = open(logfile, 'a')

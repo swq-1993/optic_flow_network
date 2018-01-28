@@ -7,7 +7,7 @@ import tensorflow.contrib.slim as slim
 import config
 import cv2
 import numpy as np
-from util import *
+from data import *
 import correlation
 import downsample
 
@@ -92,8 +92,7 @@ def net_structure(img1, img2):
                 conv_a_2 = slim.conv2d(pad(conv_a_1, 2), 128, 5, scope='conv2')
                 conv_a_3 = slim.conv2d(pad(conv_a_2, 2), 256, 5, scope='conv3')
 
-                conv_b_1 = slim.conv2d(pad(img2, 3),
-                                       64, 7, scope='conv1', reuse=True)
+                conv_b_1 = slim.conv2d(pad(img2, 3), 64, 7, scope='conv1', reuse=True)
                 conv_b_2 = slim.conv2d(pad(conv_b_1, 2), 128, 5, scope='conv2', reuse=True)
                 conv_b_3 = slim.conv2d(pad(conv_b_2, 2), 256, 5, scope='conv3', reuse=True)
 
@@ -170,6 +169,28 @@ def net_structure(img1, img2):
                                             activation_fn=None)
             """ END: Refinement Network """
 
+            '''new loss'''
+            # target_height, target_width = int(predict_flow2.shape[1].value), int(predict_flow2.shape[2].value)
+            # predict_flow6 = tf.image.resize_bilinear(predict_flow6,
+            #                                          tf.stack([target_height, target_width]),
+            #                                          align_corners=True)
+            # predict_flow5 = tf.image.resize_bilinear(predict_flow5,
+            #                                          tf.stack([target_height, target_width]),
+            #                                          align_corners=True)
+            # predict_flow4 = tf.image.resize_bilinear(predict_flow4,
+            #                                          tf.stack([target_height, target_width]),
+            #                                          align_corners=True)
+            # predict_flow3 = tf.image.resize_bilinear(predict_flow3,
+            #                                          tf.stack([target_height, target_width]),
+            #                                          align_corners=True)
+            # predict = tf.concat([predict_flow5, predict_flow4, predict_flow3, predict_flow2], axis=3)
+            # flow = predict * 20.0
+            # flow_temp0 = slim.conv2d(pad(predict), num_outputs=2, kernel_size=2, stride=1, scope='flow_temp0')
+            # flow_temp = tf.image.resize_bilinear(flow_temp0,
+            #                                      tf.stack([img_height, img_width]),
+            #                                      align_corners=True)
+            # flow = flow_temp * 20.0
+
             flow = predict_flow2 * 20.0
             # TODO: Look at Accum (train) or Resample (deploy) to see if we need to do something different
             flow = tf.image.resize_bilinear(flow,
@@ -230,11 +251,5 @@ def loss(flow, predictions):
 
 if __name__ == '__main__':
     trainset = get_train_file()
-    batch_img1, batch_img2, batch_flo = trainset.build_batch(4)
+    batch_img1, batch_img2, batch_flo = trainset.get_batch(6)
     net_structure(batch_img1, batch_img2)
-
-# if __name__ == '__main__':
-#     img1_placeholder, img2_placeholder, flo_placeholder = placeholder_inputs()
-#     trainset = get_train_file()
-#     feed_dict = feed_dict(trainset, img1_placeholder, img2_placeholder, flo_placeholder)
-
